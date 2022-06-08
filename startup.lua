@@ -36,7 +36,7 @@ else
 	speaker.playNote(instr, 3, 16)
 	sleep(0.01)
 
-	local updateUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/update.txt"
+	local updateUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/version.txt"
 
 	local updateResponse = http.get(updateUri)
 
