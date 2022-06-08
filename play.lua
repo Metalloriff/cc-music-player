@@ -26,7 +26,7 @@ else
 	songFile.close()
 end
 
-if uri == nil or not string.starts(uri, "https://") then
+if uri == nil or not uri:find("^https") then
 	print("ERR - Invalid URI!")
 	return
 end
