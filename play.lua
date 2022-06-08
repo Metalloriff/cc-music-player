@@ -6,7 +6,7 @@ local arg = { ... }
 local uri = nil
 
 if arg[1] ~= nil then
-	local fp = "songs/" .. args[1] .. ".txt"
+	local fp = "songs/" .. arg[1] .. ".txt"
 
 	if fs.exists(fp) then
 		local file = fs.open(fp, "r")
