@@ -33,11 +33,12 @@ if uri == nil or not uri:find("^https") then
 end
 
 function playChunk(chunk)
-	local buffer = decoder(chunk)
-	local returnValue = false
+	local returnValue = speakers[1].playAudio(chunk)
 
 	for i, speaker in pairs(speakers) do
-		if speaker.playAudio(buffer) then returnValue = true end
+		if i > 1 then
+			speaker.playAudio(chunk)
+		end
 	end
 
 	return returnValue
@@ -49,7 +50,9 @@ while true do
 	local chunkSize = 4 * 1024
 	local chunk = response.read(chunkSize)
 	while chunk ~= nil do
-		while not playChunk(chunk) do
+		local buffer = decoder(chunk)
+
+		while not playChunk(buffer) do
 			os.pullEvent("speaker_audio_empty")
 		end
 
