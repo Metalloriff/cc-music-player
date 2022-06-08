@@ -6,7 +6,19 @@ local arg = { ... }
 local uri = nil
 
 if arg[1] ~= nil then
-	uri = args[1]
+	local fp = "songs/" .. args[1] .. ".txt"
+
+	if fs.exists(fp) then
+		local file = fs.open(fp, "r")
+
+		uri = file.readAll()
+
+		file.close()
+	else
+		print("Song was not found on device!")
+
+		return
+	end
 else
 	local songFile = fs.open("disk/song.txt", "r")
 	uri = songFile.readAll()
