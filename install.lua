@@ -1,6 +1,8 @@
 local baseUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/"
 local files = { "help", "play", "save", "startup" }
 
+term.clear()
+
 for _, file in pairs(files) do
 	print("Downloading program '" .. file .. "'...")
 

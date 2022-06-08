@@ -40,3 +40,6 @@ end
 print("")
 
 print("To save songs, they need to be converted to the DFPWMA audio format and uploaded to a static hosting site. For more information on this, enter 'help saving'.")
+
+if fs.exists("download.lua") then fs.delete("download.lua") end
+if fs.exists("install.lua") then fs.delete("install.lua") end
