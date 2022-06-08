@@ -31,6 +31,16 @@ if uri == nil or not uri:find("^https") then
 	return
 end
 
+function playBuffer(buffer)
+	local returnValue = false
+
+	for x, speaker in pairs(speakers) do
+		if speaker.playAudio(buffer) then returnValue = true end
+	end
+
+	return returnValue
+end
+
 while true do
 	local response = http.get(uri, nil, true)
 
@@ -41,7 +51,7 @@ while true do
 	while chunk ~= nil do
 		local buffer = decoder(chunk)
 
-		while not speaker.playAudio(buffer) do
+		while not playBuffer(buffer) do
 			os.pullEvent("speaker_audio_empty")
 		end
 
