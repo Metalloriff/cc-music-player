@@ -1,6 +1,7 @@
 local dfpwm = require("cc.audio.dfpwm")
-local speaker = { peripheral.find("speaker") }
+local speakers = { peripheral.find("speaker") }
 local drive = peripheral.find("drive")
+local decoder = dfpwm.make_decoder()
 
 local arg = { ... }
 local uri = nil
@@ -31,10 +32,11 @@ if uri == nil or not uri:find("^https") then
 	return
 end
 
-function playBuffer(buffer)
+function playChunk(chunk)
+	local buffer = decoder(chunk)
 	local returnValue = false
 
-	for x, speaker in pairs(speakers) do
+	for i, speaker in pairs(speakers) do
 		if speaker.playAudio(buffer) then returnValue = true end
 	end
 
@@ -44,14 +46,10 @@ end
 while true do
 	local response = http.get(uri, nil, true)
 
-	local decoder = dfpwm.make_decoder()
-
 	local chunkSize = 4 * 1024
 	local chunk = response.read(chunkSize)
 	while chunk ~= nil do
-		local buffer = decoder(chunk)
-
-		while not playBuffer(buffer) do
+		while not playChunk(chunk) do
 			os.pullEvent("speaker_audio_empty")
 		end
 
