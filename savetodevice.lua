@@ -1,11 +1,11 @@
 local arg = { ... }
 
 if arg[2] ~= nil then
-	local file = fs.open("songs/" .. args[1] .. ".txt", "w")
+	local file = fs.open("songs/" .. arg[1] .. ".txt", "w")
 
 	file.write(arg[2])
 
-	print("Sucessfully wrote song to device. Play with 'play \"" .. args[1] .. "\"'.")
+	print("Sucessfully wrote song to device. Play with 'play \"" .. arg[1] .. "\"'.")
 
 	file.close()
 else
