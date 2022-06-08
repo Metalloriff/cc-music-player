@@ -1,5 +1,5 @@
 local dfpwm = require("cc.audio.dfpwm")
-local speaker = { peripheral.find("speaker") }
+local speakers = { peripheral.find("speaker") }
 local drive = peripheral.find("drive")
 
 local arg = { ... }
