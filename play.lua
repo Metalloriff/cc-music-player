@@ -2,11 +2,22 @@ local dfpwm = require("cc.audio.dfpwm")
 local speaker = peripheral.find("speaker")
 local drive = peripheral.find("drive")
 
-local songFile = fs.open("disk/song.txt", "r")
+local arg = { ... }
+local uri = nil
 
-local uri = songFile.readAll()
+if arg[1] ~= nil then
+	uri = args[1]
+else
+	local songFile = fs.open("disk/song.txt", "r")
+	uri = songFile.readAll()
 
-songFile.close()
+	songFile.close()
+end
+
+if uri == nil or not string.starts(uri, "https://") then
+	print("ERR - Invalid URI!")
+	return
+end
 
 while true do
 	local response = http.get(uri, nil, true)
