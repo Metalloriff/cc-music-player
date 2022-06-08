@@ -13,4 +13,11 @@ for _, file in pairs(files) do
 	fileInstance.close()
 end
 
+local updateUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/update.txt"
+
+local updateResponse = http.get(updateUri)
+local updateFile = fs.open("version.txt", "w")
+
+updateFile.write(updateResponse.readAll())
+
 print("Installation complete! Please restart your computer.")

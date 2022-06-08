@@ -35,6 +35,19 @@ else
 	sleep(0.01)
 	speaker.playNote(instr, 3, 16)
 	sleep(0.01)
+
+	local updateUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/update.txt"
+
+	local updateResponse = http.get(updateUri)
+
+	if fs.exists("version.txt") then
+		local updateFile = fs.open("version.txt", "r")
+
+		if updateFile.readAll() ~= updateResponse.readAll() then
+			print("")
+			print("NOTE - There is an update available! To get the latest version, type 'download' into the console.")
+		end
+	end
 end
 
 print("")
