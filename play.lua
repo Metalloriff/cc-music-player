@@ -34,13 +34,22 @@ if uri == nil or not uri:find("^https") then
 end
 
 function playChunk(chunk)
-	local returnValue = speakers[1].playAudio(chunk)
+	local returnValue = nil
+	local callbacks = {}
 
 	for i, speaker in pairs(speakers) do
 		if i > 1 then
-			speaker.playAudio(chunk, volume or 1.0)
+			table.insert(callbacks, function()
+				speaker.playAudio(chunk, volume or 1.0)
+			end)
+		else
+			table.insert(callbacks, function()
+				returnValue = speaker.playAudio(chunk, volume or 1.0)
+			end)
 		end
 	end
+
+	parallel.waitForAll(table.unpack(callbacks))
 
 	return returnValue
 end
