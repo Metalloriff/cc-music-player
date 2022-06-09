@@ -1,5 +1,11 @@
 term.clear()
 
+settings.define("media_center.volume", {
+	description = "The volume to play songs at.",
+	default = 1.0,
+	type = "number"
+})
+
 print("Welcome to the media center!")
 
 print("")
