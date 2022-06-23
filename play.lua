@@ -54,7 +54,7 @@ function playChunk(chunk)
 	return returnValue
 end
 
-print("Playing '" .. drive.getDiskLabel() .. "' at volume " .. (volume or 1.0))
+print("Playing '" .. arg[1] or drive.getDiskLabel() .. "' at volume " .. (volume or 1.0))
 
 local quit = false
 
