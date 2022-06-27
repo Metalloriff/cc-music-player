@@ -11,7 +11,7 @@ print("Welcome to the media center!")
 print("")
 
 if peripheral.find("drive") == nil then
-	print("ERR - In order to play songs, you need a disk drive connected. No valid disk drive was found.")
+	print("WARN - No valid disk drive was found. You will have to save files to the device using `savetodevice`, or, connect a disk drive.")
 else
 	print("To play songs, just insert a disk into the connected disk drive, and run the 'play' command.")
 end

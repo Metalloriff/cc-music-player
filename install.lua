@@ -1,5 +1,5 @@
 local baseUri = "https://raw.githubusercontent.com/Metalloriff/cc-music-player/main/"
-local files = { "help", "play", "save", "savetodevice", "startup" }
+local files = { "help", "play", "save", "savetodevice", "startup", "menu.lua", "setvolume.lua" }
 
 term.clear()
 

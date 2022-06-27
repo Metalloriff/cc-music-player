@@ -3,23 +3,63 @@ local speakers = { peripheral.find("speaker") }
 local drive = peripheral.find("drive")
 local decoder = dfpwm.make_decoder()
 
-local arg = { ... }
+local menu = require "menu"
+
 local uri = nil
 local volume = settings.get("media_center.volume")
 
-if arg[1] ~= nil then
-	local fp = "songs/" .. arg[1] .. ".txt"
+if drive == nil or not drive.isDiskPresent() then
+	local savedSongs = fs.list("songs/")
 
-	if fs.exists(fp) then
-		local file = fs.open(fp, "r")
-
-		uri = file.readAll()
-
-		file.close()
+	if #savedSongs == 0 then
+		error("ERR - No disk was found in the drive, or no drive was found. No sound files were found saved to device.")
 	else
-		print("Song was not found on device!")
+		local entries = {
+			[1] = {
+				label = "[CANCEL]",
+				callback = function()
+					error()
+				end
+			}
+		}
+		local selectedSong = nil
 
-		return
+		for i, fp in ipairs(savedSongs) do
+			table.insert(entries, {
+				label = fp:match("^([^.]+)"),
+				callback = function()
+					selectedSong = fp
+
+					error()
+				end
+			})
+		end
+
+		menu.init({
+			main = {
+				entries = entries
+			}
+		})
+
+		print("Please select a song from the device:")
+
+		menu.thread()
+
+		if selectedSong ~= nil then
+			local fp = "songs/" .. selectedSong
+
+			if fs.exists(fp) then
+				local file = fs.open(fp, "r")
+
+				uri = file.readAll()
+
+				file.close()
+			else
+				print("Song was not found on device!")
+
+				return
+			end
+		else error() end
 	end
 else
 	local songFile = fs.open("disk/song.txt", "r")
