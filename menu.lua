@@ -3,6 +3,7 @@ local selectedEntry = 1
 
 local menus = {}
 local currentMenu = "main"
+local running = true
 
 function render()
 	term.clear()
@@ -56,7 +57,7 @@ function onKeyPress(key)
 end
 
 function thread()
-	while true do
+	while running do
 		render()
 
 		local event, key = os.pullEvent "key"
@@ -66,6 +67,7 @@ end
 
 return {
 	init = function(m) menus = m end,
+	exit = function() running = false end,
 	render = render,
 	thread = thread
 }

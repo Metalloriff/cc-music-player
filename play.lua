@@ -7,6 +7,7 @@ local menu = require "menu"
 
 local uri = nil
 local volume = settings.get("media_center.volume")
+local selectedSong = nil
 
 if drive == nil or not drive.isDiskPresent() then
 	local savedSongs = fs.list("songs/")
@@ -22,7 +23,6 @@ if drive == nil or not drive.isDiskPresent() then
 				end
 			}
 		}
-		local selectedSong = nil
 
 		for i, fp in ipairs(savedSongs) do
 			table.insert(entries, {
@@ -30,7 +30,7 @@ if drive == nil or not drive.isDiskPresent() then
 				callback = function()
 					selectedSong = fp
 
-					error()
+					menu.exit()
 				end
 			})
 		end
@@ -40,8 +40,6 @@ if drive == nil or not drive.isDiskPresent() then
 				entries = entries
 			}
 		})
-
-		print("Please select a song from the device:")
 
 		menu.thread()
 
@@ -94,7 +92,7 @@ function playChunk(chunk)
 	return returnValue
 end
 
-print("Playing '" .. arg[1] or drive.getDiskLabel() .. "' at volume " .. (volume or 1.0))
+print("Playing '" .. selectedSong or drive.getDiskLabel() .. "' at volume " .. (volume or 1.0))
 
 local quit = false
 
